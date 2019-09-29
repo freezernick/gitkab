@@ -56,7 +56,8 @@ namespace gitkab
             }
             else
             {
-                return 0;
+                Console.WriteLine("What should I do?");
+                return 1;
             }
         }
     }
