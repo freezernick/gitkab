@@ -49,8 +49,7 @@ namespace gitkab
                 else
                 {
                     Console.WriteLine("Invalid key -- assuming no");
-                    // save & close
-                    // get structure
+                    GetNamespaces(Key);
                     return 1;
                 }
             }
@@ -67,7 +66,7 @@ namespace gitkab
 
         static void GetNamespaces(string PrivateKey)
         {
-            WebRequest request = WebRequest.Create("https://gitlab.com/api/v4/namespaces?access_token=" + PrivateKey);
+            WebRequest request = WebRequest.Create("https://gitlab.com/api/v4/namespaces?private_token=" + PrivateKey);
             WebResponse response = request.GetResponse();
             Stream dataStream = response.GetResponseStream();
             response.Close();
