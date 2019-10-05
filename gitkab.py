@@ -10,6 +10,7 @@ subparsers = parser.add_subparsers()
 config_parser = subparsers.add_parser('config') # gitkab config
 config_subparser = config_parser.add_subparsers()
 config_parser.add_argument('--key')
+config_parser.add_argument('--update', action='store_true')
 
 config_user = config_subparser.add_parser('user') # gitkab config user ...
 config_user_group = config_user.add_mutually_exclusive_group(required=True)
@@ -31,3 +32,6 @@ args = parser.parse_args()
 if(args.key):
     # save / overwrite api key
     print("Updated key")
+elif (args.update):
+    # load key from config / request
+    print("Updated namespaces")
