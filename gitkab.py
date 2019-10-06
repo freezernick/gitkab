@@ -27,6 +27,12 @@ def addUser(args):
 def removeUser(args):
     print("remove")
 
+def writeConfig(args):
+    print("wrote")
+
+def readConfig(args):
+    print("read")
+
 args = parser.parse_args()
 
 if(args.key):
