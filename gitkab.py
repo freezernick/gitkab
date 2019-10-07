@@ -33,6 +33,14 @@ def writeConfig(args):
 def readConfig(args):
     print("read")
 
+def getNamespaces(pk):
+    headers = {'PRIVATE-TOKEN': pk}
+    response = requests.get('https://gitlab.com/api/v4/namespaces?per_page=100', headers=headers)
+    if(response.headers.get('X-Total-Pages') > 1):
+        # do stuff
+        print("test")
+    print(response.text)
+
 args = parser.parse_args()
 
 if(args.key):
