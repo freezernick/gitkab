@@ -1,7 +1,8 @@
-import argparse, requests, os
+import argparse, requests, os, configparser
 
 # Used for loading the config
 scriptDirectory = os.path.dirname(__file__)
+cfgpath = os.path.join(scriptDirectory, 'config.cfg')
 
 # argparse
 parser = argparse.ArgumentParser()
@@ -17,6 +18,11 @@ config_user_group = config_user.add_mutually_exclusive_group(required=True)
 config_user_group.add_argument('--list', action='store_true') # gitkab config user --list
 config_user_group.add_argument('--add', action='store_true') # gitkab config user --add
 config_user_group.add_argument('--remove', action='store_true') # gitkab config user --remove
+
+def writeConfig(config):
+    with open(cfgpath, 'w+') as configfile:
+        config.write(configfile)
+
 
 def listUsers(args):
     print("list")
