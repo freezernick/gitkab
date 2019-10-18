@@ -25,8 +25,16 @@ def write():
     with open(cfgpath, 'w+') as configfile:
         config.write(configfile)
 
+def login(args):
+    print("Enter the alias of the user you want to use:")
+    alias = input()
+    read()
+
 # configparser
 config = configparser.ConfigParser()
+
+login_parser = subparsers.add_parser('login')
+login_parser.set_defaults(func=login)
 
 config_parser = subparsers.add_parser('config') # gitkab config
 config_subparser = config_parser.add_subparsers()
