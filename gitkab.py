@@ -13,7 +13,13 @@ def configure(args):
         read()
         config['Gitlab']['Key'] = args.key
         write()
-
+    elif(args.add):
+        addUser()
+    elif(args.remove):
+        removeUser()
+    elif(args.list):
+        listUsers()
+    
 def write():
     global config
     with open(cfgpath, 'w+') as configfile:
@@ -42,17 +48,33 @@ if(os.path.exists(cfgpath) == False):
     print("Please enter your API key:")
     config['GitLab']['Key'] = input()
     config.add_section('Namespaces')
+    config.add_section('Git')
     write()
     exit()
 
-def listUsers(args):
-    print("list")
+def listUsers():
+    read()
+    for key, value in dict(config.items('Git')).items():
+        print(key + " : "+ value)
 
-def addUser(args):
-    print("add")
+def addUser():
+    read()
+    print("Please enter the username:")
+    username = input()
+    print('Please enter the email:')
+    email = input()
+    print('User GPG-Key? (y/n)')
+    if(input() == "y"):
+        print('Please enter the GPG-Key:')
+        gpg = input()
+        config['Git']['0'] = ",".join((username, email, gpg))
+    else:
+        config['Git']['0'] = ",".join((username, email))
+    write(config)
 
 def removeUser(args):
-    print("remove")
+    print("Enter the ID of the user you want to remove:")
+    id = input()
 
 def read():
     global config
@@ -65,3 +87,8 @@ def getNamespaces(pk):
         # do stuff
         print("test")
     print(response.text)
+
+try:
+    args.func(args)
+except AttributeError:
+    parser.error("too few arguments")
