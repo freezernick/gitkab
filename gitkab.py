@@ -59,6 +59,8 @@ def listUsers():
 
 def addUser():
     read()
+    print("Please enter the alias:")
+    alias = input()
     print("Please enter the username:")
     username = input()
     print('Please enter the email:')
@@ -67,14 +69,17 @@ def addUser():
     if(input() == "y"):
         print('Please enter the GPG-Key:')
         gpg = input()
-        config['Git']['0'] = ",".join((username, email, gpg))
+        config['Git'][alias] = ",".join((username, email, gpg))
     else:
-        config['Git']['0'] = ",".join((username, email))
-    write(config)
+        config['Git'][alias] = ",".join((username, email))
+    write()
 
-def removeUser(args):
-    print("Enter the ID of the user you want to remove:")
-    id = input()
+def removeUser():
+    print("Enter the alias of the user you want to remove:")
+    alias = input()
+    read()
+    config.remove_option('Git', alias)
+    write()
 
 def read():
     global config
