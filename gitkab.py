@@ -25,8 +25,24 @@ def write():
     with open(cfgpath, 'w+') as configfile:
         config.write(configfile)
 
+def login(args):
+    print("Enter the alias of the user you want to use:")
+    alias = input()
+    read()
+    user = config['Git'][alias]
+    if(len(user.split(",")) < 3):
+        name, email = user.split(",")
+    else:
+        name, email, key = user.split(",")
+        os.system("git config --local user.signingkey \"{}\"".format(key))
+    os.system("git config --local user.name \"{}\"".format(name))
+    os.system("git config --local user.email \"{}\"".format(email))
+
 # configparser
 config = configparser.ConfigParser()
+
+login_parser = subparsers.add_parser('login')
+login_parser.set_defaults(func=login)
 
 config_parser = subparsers.add_parser('config') # gitkab config
 config_subparser = config_parser.add_subparsers()
